@@ -1,0 +1,26 @@
+# version: '3.5'
+
+services:
+  jupyter:
+    container_name: consolidated_jupyter_notebook_container
+    #image: jupyter/minimal-notebook
+    build:
+      context: .
+      # args:
+      #   - REFINEVERSION=$REFINEVERSION
+    environment:
+      JUPYTER_TOKEN: "$JUPYTER_TOKEN"
+    ports:
+      - "8988:8888"
+    networks:
+      - jupyternet_consolidated
+    volumes:
+      - ./jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
+    restart: unless-stopped
+
+networks:
+  jupyternet_consolidated:
+    driver: bridge
+
+volumes:
+  jupyter:
